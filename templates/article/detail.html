@@ -10,10 +10,26 @@
     <div class="container">
         <div class="row">
             <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
-            <div class="col-12 alert alert-success">作者：{{ article.author }}</div>
+            <div class="col-12 alert alert-success">
+                作者：{{ article.author }}
+                <a href="#" onclick="confirm_delete()">删除文章</a>
+            </div>
             <div class="col-12">
                 <p>{{ article.body | safe }}</p>
             </div>
         </div>
     </div>
+    <script>
+        function confirm_delete() {
+            layer.open({
+                title: '确认删除',
+                content: '确认删除这篇文章吗？',
+                area: ['500px', '300px'],
+                anim: 1,
+                yes: function (index, layero) {
+                    location.href = "{% url 'article:article-delete' article.id %}"
+                }
+            })
+        }
+    </script>
 {% endblock %}
