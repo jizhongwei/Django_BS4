@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    # 后台管理路由分支
     path('admin/', admin.site.urls),
+    # 文章管理路由分支
     path('article/', include('article.urls', namespace= 'article')),
+    # 用户管理路由分支
+    path('userprofile/', include('userprofile.urls', namespace= 'userprofile')),
 ]

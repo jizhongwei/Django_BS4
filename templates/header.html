@@ -16,6 +16,20 @@
             <li class="nav-item">
                 <a href="{% url 'article:article-create' %}" class="nav-link">写文章</a>
             </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">
+                        {{ user.username | upper }}
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'userprofile:logout' %}">退出登录</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'userprofile:login' %}" class="nav-link">登录</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
