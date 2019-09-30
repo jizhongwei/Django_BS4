@@ -63,3 +63,19 @@ def article_delete(request, id):
     article.delete()
     # 完成删除后返回文章列表
     return redirect('article:article-list')
+
+def article_update(request, id):
+    article = ArticlePost.objects.get(id = id)
+    if request.method == 'POST':
+        article_post_form = ArticlePostForm(data= request.POST)
+        if article_post_form.is_valid():
+            article.title = request.POST.get('title')
+            article.body = request.POST.get('body')
+            article.save()
+            return redirect('article:article-detail',id = id)
+        else:
+            return HttpResponse('表单内容有误，请重新填写。')
+    else:
+        article_post_form = ArticlePostForm()
+        context = {'article': article, 'article_post_form': article_post_form}
+        return render(request, 'article/update.html', context)
