@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a href="#" class="navbar-brand">Dick's JZW</a>
+        <a href="{% url 'article:article-list' %}" class="navbar-brand">Dick's JZW</a>
     </div>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
@@ -12,6 +12,9 @@
             </li>
             <li class="nav-item">
                 <a href="{% url 'article:article-list' %}" class="nav-link">文章</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'article:article-create' %}" class="nav-link">写文章</a>
             </li>
         </ul>
     </div>
