@@ -9,7 +9,7 @@ class UserLoginForm(forms.Form):
 
 class UserRegisterForm(forms.ModelForm):
     password = forms.CharField()
-    passwor2 = forms.CharField()
+    password2 = forms.CharField()
 
     class Meta:
         model = User
