@@ -20,6 +20,8 @@ def article_list(request):
 
 def article_detail(request,id):
     article = ArticlePost.objects.get(id = id)
+    article.views += 1
+    article.save(update_fields= ['views',])
     #将markdown语法渲染成HTML样式
     article.body = markdown.markdown(article.body,
                                      extensions = [
@@ -64,6 +66,7 @@ def article_create(request):
         return render(request, 'article/create.html', context)
 
 #删文章
+@login_required(login_url= '/userproflie/login/')
 def article_delete(request, id):
     # 根据id获取需要删除的文章
     article = ArticlePost.objects.get(id = id)
@@ -72,8 +75,13 @@ def article_delete(request, id):
     # 完成删除后返回文章列表
     return redirect('article:article-list')
 
+#要求用户必须登录才能更新文章
+@login_required(login_url= '/userprofile/login/')
 def article_update(request, id):
     article = ArticlePost.objects.get(id = id)
+
+    if request.user != article.author:
+        return HttpResponse("抱歉，您无权修改这篇文章。")
     if request.method == 'POST':
         article_post_form = ArticlePostForm(data= request.POST)
         if article_post_form.is_valid():

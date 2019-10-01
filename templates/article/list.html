@@ -16,7 +16,14 @@
                             <p class="card-text">{{ article.body | slice:'100' }}...</p>
                         </div>
                         <div class="card-footer">
-                            <a href="{% url 'article:article-detail' article.id %}" class="btn btn-primary">阅读本文</a>
+                            <a href="{% url 'article:article-detail' article.id %}" class="btn btn-primary">
+                                阅读本文
+                            </a>
+                            <span>
+                                <small class="col align-self-end" style="color: gray;">
+                                    浏览：{{ article.views }}
+                                </small>
+                            </span>
                         </div>
                     </div>
                 </div>

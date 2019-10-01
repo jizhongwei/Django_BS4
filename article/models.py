@@ -9,6 +9,8 @@ class ArticlePost(models.Model):
     created = models.DateTimeField(default= timezone.now)
     updated = models.DateTimeField(auto_now= True)
 
+    views = models.PositiveIntegerField(default= 0)
+
     class Meta:
         ordering = ('-created',)
 
