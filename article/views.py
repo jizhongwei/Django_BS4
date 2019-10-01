@@ -7,6 +7,7 @@ from django.db.models import Q
 from .forms import ArticlePostForm
 from django.contrib.auth.models import User
 from .models import ArticlePost
+from comment.models import Comment
 import markdown
 
 
@@ -56,8 +57,9 @@ def article_detail(request,id):
             'markdown.extensions.toc',
         ]
     )
+    comments = Comment.objects.filter(article = id)
     article.body = md.convert(article.body)
-    context = {'article': article, 'toc': md.toc}
+    context = {'article': article, 'toc': md.toc, 'comments': comments}
     return render(request, 'article/detail.html', context)
 
 #写文章的视图

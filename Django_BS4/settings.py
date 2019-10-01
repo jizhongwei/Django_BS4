@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'article',
     # 注册userprofile应用
     'userprofile',
+    #注册comment应用
+    'comment',
 ]
 
 MIDDLEWARE = [
@@ -111,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
