@@ -24,6 +24,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'userprofile:logout' %}">退出登录</a>
                         <a href="#" class="dropdown-item" onclick="user_delete()">删除用户</a>
+                        <a href="{% url 'userprofile:edit' user.id %}" class="dropdown-item">个人信息</a>
                     </div>
                 </li>
             {% else %}
