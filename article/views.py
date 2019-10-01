@@ -10,7 +10,13 @@ import markdown
 
 
 def article_list(request):
-    article_list = ArticlePost.objects.all()
+    if request.GET.get('order') == 'views':
+        article_list = ArticlePost.objects.all().order_by('-views')
+        order = 'views'
+    else:
+        article_list = ArticlePost.objects.all()
+        order = 'normal'
+
     paginator = Paginator(article_list, 6)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
