@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .forms import ArticlePostForm
 from django.contrib.auth.models import User
@@ -10,18 +11,29 @@ import markdown
 
 
 def article_list(request):
-    if request.GET.get('order') == 'views':
-        article_list = ArticlePost.objects.all().order_by('-views')
-        order = 'views'
+    search = request.GET.get('search')
+    order = request.GET.get('order')
+    if search:
+        if order == 'views':
+            article_list = ArticlePost.objects.filter(
+                Q(title__icontains= search) | Q(body__icontains= search)
+            ).order_by('-views')
+        else:
+            article_list = ArticlePost.objects.filter(
+                Q(title__icontains= search) | Q(body__icontains= search)
+            )
     else:
-        article_list = ArticlePost.objects.all()
-        order = 'normal'
+        search = ''
+        if order == 'views':
+            article_list = ArticlePost.objects.all().order_by('-views')
+        else:
+            article_list = ArticlePost.objects.all()
 
     paginator = Paginator(article_list, 6)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
 
-    context = {'articles': articles}
+    context = {'articles': articles, 'order': order, 'search': search}
     return render(request, 'article/list.html', context)
 
 def article_detail(request,id):
