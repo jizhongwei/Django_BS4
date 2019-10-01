@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 from .forms import ArticlePostForm
 from django.contrib.auth.models import User
@@ -9,7 +10,11 @@ import markdown
 
 
 def article_list(request):
-    articles = ArticlePost.objects.all()
+    article_list = ArticlePost.objects.all()
+    paginator = Paginator(article_list, 6)
+    page = request.GET.get('page')
+    articles = paginator.get_page(page)
+
     context = {'articles': articles}
     return render(request, 'article/list.html', context)
 
