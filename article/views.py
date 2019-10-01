@@ -124,3 +124,9 @@ def article_update(request, id):
         article_post_form = ArticlePostForm()
         context = {'article': article, 'article_post_form': article_post_form}
         return render(request, 'article/update.html', context)
+
+class ContextMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order'] = 'views'
+        return context
