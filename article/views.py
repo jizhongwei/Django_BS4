@@ -41,14 +41,23 @@ def article_detail(request,id):
     article.views += 1
     article.save(update_fields= ['views',])
     #将markdown语法渲染成HTML样式
-    article.body = markdown.markdown(article.body,
-                                     extensions = [
-                                         #包含 缩写、表格等常用扩展
-                                         'markdown.extensions.extra',
-                                         # 语法高亮扩展
-                                         'markdown.extensions.codehilite',
-                                     ])
-    context = {'article': article}
+    # article.body = markdown.markdown(article.body,
+    #                                  extensions = [
+    #                                      #包含 缩写、表格等常用扩展
+    #                                      'markdown.extensions.extra',
+    #                                      # 语法高亮扩展
+    #                                      'markdown.extensions.codehilite',
+    #                                      'markdown.extensions.toc',
+    #                                  ])
+    md = markdown.Markdown(
+        extensions= [
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc',
+        ]
+    )
+    article.body = md.convert(article.body)
+    context = {'article': article, 'toc': md.toc}
     return render(request, 'article/detail.html', context)
 
 #写文章的视图

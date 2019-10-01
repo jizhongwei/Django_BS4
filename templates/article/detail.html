@@ -9,25 +9,34 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
-            <div class="col-12 alert alert-success">
-                作者：{{ article.author }}
-                {% if user == article.author %}
-                    <a href="#" onclick="confirm_delete()">
-                        删除文章
-                    </a>
-                    <a href="{% url 'article:article-update' article.id %}">
-                        更新文章
-                    </a>
-                {% endif %}
-            <div>
-                浏览：{{ article.views }} |
-                创建时间：{{ article.created | date:"Y年m月d日"}}
-            </div>
-            </div>
+            <div class="col-9">
+                <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
+                <div class="col-12 alert alert-success">
+                    作者：{{ article.author }}
+                    {% if user == article.author %}
+                        <a href="#" onclick="confirm_delete()">
+                            删除文章
+                        </a>
+                        <a href="{% url 'article:article-update' article.id %}">
+                            更新文章
+                        </a>
+                    {% endif %}
+                <div>
+                    浏览：{{ article.views }} |
+                    创建时间：{{ article.created | date:"Y年m月d日"}}
+                </div>
+                </div>
 
-            <div class="col-12">
-                <p>{{ article.body | safe }}</p>
+                <div class="col-12">
+                    <p>{{ article.body | safe }}</p>
+                </div>
+            </div>
+            <div class="col-3 mt-4">
+                <h4><strong>目录</strong></h4>
+                <hr>
+                <div>
+                    {{ toc | safe }}
+                </div>
             </div>
         </div>
     </div>
