@@ -6,6 +6,10 @@
     文章详情
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'prism/prism.css' %}">
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -38,7 +42,11 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="body"><strong>我也要发言</strong></label>
-                                <textarea name="body" id="body" cols="30" rows="5" class="form-control"></textarea>
+{#                                <textarea name="body" id="body" cols="30" rows="5" class="form-control"></textarea>#}
+                                <div>
+                                    {{ comment_form.media }}
+                                    {{ comment_form.body }}
+                                </div>
                             </div>
                             <button class="btn btn-primary" type="submit">发送</button>
                         </form>
@@ -50,7 +58,7 @@
                     </h5>
                     <br>
                 {% endif %}
-
+                <hr>
                 <h4>共有{{ comments.count }}条评论</h4>
                 <div>
                     {% for comment in comments %}
@@ -64,7 +72,7 @@
                             </span>
                         </p>
                         <pre style="font-family: inherit; font-size: 1em;">
-                            {{ comment.body }}
+                            {{ comment.body| safe }}
                         </pre>
                     {% endfor %}
 
@@ -91,6 +99,14 @@
                     location.href = "{% url 'article:article-delete' article.id %}"
                 }
             })
-        }
+        };
+
+    </script>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+    <script>
+        $('.django-ckeditor-widget').removeAttr('style');
     </script>
 {% endblock %}

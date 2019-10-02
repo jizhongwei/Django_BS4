@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     #注册comment应用
     'comment',
     'taggit',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,21 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'width': 'auto',
+        'height': '250px',
+        'tabSpaces': 4,
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Smiley', 'CodeSnippet'],
+            ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
+            ['TextColor', 'BGColor'],
+            ['Link', 'Unlink'],
+            ['NumberedList', 'BulletedList'],
+            ['Maximize']
+        ],
+        'extraPlugins': ','.join(['codesnippet', 'prism', 'widget', 'lineutils']),
+    }
+}

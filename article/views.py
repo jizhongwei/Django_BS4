@@ -8,6 +8,7 @@ from .forms import ArticlePostForm
 from django.contrib.auth.models import User
 from .models import ArticlePost, ArticleColumn
 from comment.models import Comment
+from comment.forms import CommentForm
 import markdown
 
 
@@ -65,8 +66,13 @@ def article_detail(request,id):
         ]
     )
     comments = Comment.objects.filter(article = id)
+    comment_form = CommentForm()
     article.body = md.convert(article.body)
-    context = {'article': article, 'toc': md.toc, 'comments': comments}
+    context = {'article': article,
+               'toc': md.toc,
+               'comments': comments,
+               'comment_form': comment_form
+               }
     return render(request, 'article/detail.html', context)
 
 #写文章的视图
