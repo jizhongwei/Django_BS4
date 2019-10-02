@@ -33,6 +33,11 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="tags">标签</label>
+                        <input type="text" class="form-control" id="tags" name="tags"
+                               value="{% for tag in article.tags.all %}{{ tag.name }}{% if not forloop.last %},{% endif %}{% endfor %}">
+                    </div>
+                    <div class="form-group">
                         <label for="body">文章正文</label>
                         <textarea name="body" id="body" cols="30" rows="10" class="form-control">{{ article.body }}</textarea>
                     </div>
