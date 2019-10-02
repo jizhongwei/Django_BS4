@@ -95,10 +95,19 @@
                     </div>
                     <p>
                         <span style="color:green;">
-                            {{ article.total_views }}浏览&nbsp;&nbsp;&nbsp;
+                            <i class="fas fa-eye" style="color: lightskyblue"></i>
+                            {{ article.views }}浏览&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span>
+                            <i class="fas fa-comments" style="color: yellowgreen;">
+                                {{ article.comments.count }}&nbsp;&nbsp;&nbsp;
+                            </i>
                         </span>
 
                         <span style="color:blue;">
+                            <i class="fas fa-clock" style="color: pink;">
+                                
+                            </i>
                             {{ article.created | date:"Y-m-d" }}发布&nbsp;&nbsp;&nbsp;
                         </span>
 
