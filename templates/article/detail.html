@@ -79,15 +79,27 @@
                 </div>
             </div>
 
-            <div class="col-3 mt-4">
-                <h4><strong>目录</strong></h4>
-                <hr>
-                <div>
-                    {{ toc | safe }}
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar__inner">
+                    <h4><strong>目录</strong></h4>
+                    <hr>
+                    <div>
+                        {{ toc | safe }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <style>
+    .sidebar {
+        will-change: min-height;
+    }
+    .sidebar__inner {
+        transform: translate(0,0);
+        transform:translate3d(0,0,0);
+        will-change: position, transform;
+    }
+    </style>
     <script>
         function confirm_delete() {
             layer.open({
@@ -108,5 +120,12 @@
     <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
     <script>
         $('.django-ckeditor-widget').removeAttr('style');
+    </script>
+    <script src="{% static 'sticky_sidebar/jquery.sticky-sidebar.min.js' %}"></script>
+    <script type="text/javascript">
+        $('#sidebar').stickySidebar({
+            topSpacing: 20,
+            bottomSpacing: 20,
+        })
     </script>
 {% endblock %}
