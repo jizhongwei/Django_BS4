@@ -49,25 +49,13 @@
         {% endif %}
         <div class="row mt-2">
             {% for article in articles %}
-{#                <div class="col-4 mb-4">#}
-{#                    <div class="card h-100">#}
-{#                        <h4 class="card-header">{{ article.title }}</h4>#}
-{#                        <div class="card-body">#}
-{#                            <p class="card-text">{{ article.body | slice:'100' }}...</p>#}
-{#                        </div>#}
-{#                        <div class="card-footer">#}
-{#                            <a href="{% url 'article:article-detail' article.id %}" class="btn btn-primary">#}
-{#                                阅读本文#}
-{#                            </a>#}
-{#                            <span>#}
-{#                                <small class="col align-self-end" style="color: gray;">#}
-{#                                    浏览：{{ article.views }}#}
-{#                                </small>#}
-{#                            </span>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-                <div class="col-12">
+                {% if article.avatar %}
+                    <div class="col-3">
+                        <img src="{{ article.avatar.url }}" alt="avatar" style="max-width: 100%;border-radius:20px;">
+                    </div>
+
+                {% endif %}
+                <div class="col-9">
                     {% if article.column %}
                         <button type="button"
                                 class="btn btn-sm mb-2
@@ -118,8 +106,8 @@
                             {{ article.updated | date:"Y-m-d" }}更新
                         </span>
                     </p>
-                    <br>
                 </div>
+                <hr style="width: 100%;">
             {% endfor %}
         </div>
 

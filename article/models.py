@@ -4,7 +4,10 @@ from django.utils import timezone
 from django.urls import reverse
 
 from taggit.managers import TaggableManager
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit
 
+from PIL import Image
 
 class ArticleColumn(models.Model):
     title = models.CharField(max_length= 100, blank= True)
@@ -21,6 +24,14 @@ class ArticlePost(models.Model):
     updated = models.DateTimeField(auto_now= True)
 
     views = models.PositiveIntegerField(default= 0)
+    avatar = models.ImageField(upload_to= 'article/%Y%m%d/', blank=True)
+
+    # avatar = ProcessedImageField(
+    #     upload_to= 'article/%Y%m%d',
+    #     processors= [ResizeToFit(width= 400)],
+    #     format = 'JPEG',
+    #     options= {'quality': 100}.
+    # )
 
     column = models.ForeignKey(
         ArticleColumn,
@@ -40,3 +51,15 @@ class ArticlePost(models.Model):
 
     def get_absolute_url(self):
         return reverse('article:article-detail', args=[self.id,])
+
+    def save(self, *args, **kwargs):
+        article = super(ArticlePost, self).save(*args, **kwargs)
+        if self.avatar and not kwargs.get('update_fields'):
+            img = Image.open(self.avatar)
+            (x, y) = img.size
+            new_x = 400
+            new_y = int(new_x * (y / x))
+            resize_img = img.resize((new_x, new_y), Image.ANTIALIAS)
+            resize_img.save(self.avatar.path)
+
+        return article
