@@ -49,23 +49,68 @@
         {% endif %}
         <div class="row mt-2">
             {% for article in articles %}
-                <div class="col-4 mb-4">
-                    <div class="card h-100">
-                        <h4 class="card-header">{{ article.title }}</h4>
-                        <div class="card-body">
-                            <p class="card-text">{{ article.body | slice:'100' }}...</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="{% url 'article:article-detail' article.id %}" class="btn btn-primary">
-                                阅读本文
+{#                <div class="col-4 mb-4">#}
+{#                    <div class="card h-100">#}
+{#                        <h4 class="card-header">{{ article.title }}</h4>#}
+{#                        <div class="card-body">#}
+{#                            <p class="card-text">{{ article.body | slice:'100' }}...</p>#}
+{#                        </div>#}
+{#                        <div class="card-footer">#}
+{#                            <a href="{% url 'article:article-detail' article.id %}" class="btn btn-primary">#}
+{#                                阅读本文#}
+{#                            </a>#}
+{#                            <span>#}
+{#                                <small class="col align-self-end" style="color: gray;">#}
+{#                                    浏览：{{ article.views }}#}
+{#                                </small>#}
+{#                            </span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="col-12">
+                    {% if article.column %}
+                        <button type="button"
+                                class="btn btn-sm mb-2
+                                       {% if article.column.title == 'Django' %}
+                                       btn-success
+                                       {% elif article.column.title == 'Html' %}
+                                       btn-danger
+                                       {% elif aritcle.column.title == 'Markdown' %}
+                                       btn-warning
+                                       {% else %}
+                                       btn-dark
+                                       {% endif %}
+                                ">
+                            {{ article.column }}
+                        </button>
+                    {% endif %}
+                    <h4>
+                        <b>
+                            <a href="{% url 'article:article-detail' article.id %}"
+                            style="color:black;">
+                                {{ article.title }}
                             </a>
-                            <span>
-                                <small class="col align-self-end" style="color: gray;">
-                                    浏览：{{ article.views }}
-                                </small>
-                            </span>
-                        </div>
+                        </b>
+                    </h4>
+                    <div>
+                        <p style="color:gray;">
+                            {{ article.body | slice:'100' }}
+                        </p>
                     </div>
+                    <p>
+                        <span style="color:green;">
+                            {{ article.total_views }}浏览&nbsp;&nbsp;&nbsp;
+                        </span>
+
+                        <span style="color:blue;">
+                            {{ article.created | date:"Y-m-d" }}发布&nbsp;&nbsp;&nbsp;
+                        </span>
+
+                        <span style="color:darkred;">
+                            {{ article.updated | date:"Y-m-d" }}更新
+                        </span>
+                    </p>
+                    <br>
                 </div>
             {% endfor %}
         </div>

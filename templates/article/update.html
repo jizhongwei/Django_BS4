@@ -15,6 +15,23 @@
                         <label for="title">文章标题</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{ article.title }}">
                     </div>
+
+                    <div class="form-group">
+                        <label for="column">栏目</label>
+                        <select name="column" id="column" class="form-control">
+                            <option value="none">请选择栏目...</option>
+                            {% for column in columns %}
+                                <option value="{{ column.id }}"
+                                {% if column.id == article.column.id %}
+                                        selected
+                                {% endif %}
+                                >
+                                    {{ column }}
+                                </option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="body">文章正文</label>
                         <textarea name="body" id="body" cols="30" rows="10" class="form-control">{{ article.body }}</textarea>
