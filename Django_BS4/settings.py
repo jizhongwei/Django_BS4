@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'mptt',
     # 注册article应用
     'article',
     # 注册userprofile应用
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'comment',
     'taggit',
     'ckeditor',
+
 ]
 
 MIDDLEWARE = [

@@ -71,7 +71,7 @@ def article_detail(request,id):
     context = {'article': article,
                'toc': md.toc,
                'comments': comments,
-               'comment_form': comment_form
+               'comment_form': comment_form,
                }
     return render(request, 'article/detail.html', context)
 
