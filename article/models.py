@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 
+from taggit.managers import TaggableManager
+
+
 class ArticleColumn(models.Model):
     title = models.CharField(max_length= 100, blank= True)
     created = models.DateTimeField(default= timezone.now)
@@ -26,6 +29,7 @@ class ArticlePost(models.Model):
         on_delete= models.CASCADE,
         related_name= 'article',
     )
+    tags = TaggableManager(blank= True)
 
     class Meta:
         ordering = ('-created',)

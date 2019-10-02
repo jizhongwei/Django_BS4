@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'userprofile',
     #注册comment应用
     'comment',
+    'taggit',
 ]
 
 MIDDLEWARE = [

@@ -14,27 +14,34 @@ import markdown
 def article_list(request):
     search = request.GET.get('search')
     order = request.GET.get('order')
+    column = request.GET.get('column')
+    tag = request.GET.get('tag')
+    article_list = ArticlePost.objects.all()
+
     if search:
-        if order == 'views':
-            article_list = ArticlePost.objects.filter(
-                Q(title__icontains= search) | Q(body__icontains= search)
-            ).order_by('-views')
-        else:
-            article_list = ArticlePost.objects.filter(
-                Q(title__icontains= search) | Q(body__icontains= search)
-            )
+        article_list = ArticlePost.objects.filter(
+            Q(title__icontains= search) | Q(body__icontains= search)
+        )
     else:
         search = ''
-        if order == 'views':
-            article_list = ArticlePost.objects.all().order_by('-views')
-        else:
-            article_list = ArticlePost.objects.all()
+
+    if column is not None and column.isdigit():
+        article_list = article_list.filter(column= column)
+    if tag and tag != 'None':
+        article_list = article_list.filter(tags__name__in = [tag])
+    if order == 'views':
+        article_list = article_list.order_by('-views')
 
     paginator = Paginator(article_list, 4)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
 
-    context = {'articles': articles, 'order': order, 'search': search}
+    context = {'articles': articles,
+               'order': order,
+               'search': search,
+               'column': column,
+               'tag': tag,
+               }
     return render(request, 'article/list.html', context)
 
 def article_detail(request,id):
@@ -82,6 +89,8 @@ def article_create(request):
                 new_article.column = ArticleColumn.objects.get(id = request.POST.get('column'))
             # 将新文章保存到数据库中
             new_article.save()
+            # 保存tags的多对多关系
+            article_post_form.save_m2m()
             # 完成后返回到文章列表
             return redirect('article:article-list')
         # 如果数据不合法，返回错误信息
